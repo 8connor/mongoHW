@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost/scrapedisc", { useNewUrlParser: true });
+mongoose.connect("mongodb://heroku_95gsj4c7:heroku_95gsj4c7@ds125556.mlab.com:25556/heroku_95gsj4c7", { useNewUrlParser: true });
 
 // =================================================================================
 // ROUTES
