@@ -5,17 +5,29 @@ $(document).on("click", "#scrape", () => {
     success: (data) => {
       console.log(data);
 
-      console.log("i am here now");
-
       location.reload();
     },
   });
 });
 
 $(document).on("click", "#delete", () => {
-  $.get("/delete", function (data) {
-    console.log(data);
+  $.get({
+    type: "GET",
+    url: "/delete",
+    success: (data) => {
+      console.log(data);
 
-    $("#wrapper").empty();
+      $("#wrapper").empty();
+    },
   });
+});
+
+$(document).on("click", ".savebtn", function () {
+  var artNum = {
+    artNum: $(this).attr("id"),
+  };
+
+
+  $.post("/api/saved", artNum, (data) => console.log(data));
+
 });

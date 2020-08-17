@@ -24,12 +24,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://8connor:conrad1@ds125556.mlab.com:25556/heroku_95gsj4c7", { useNewUrlParser: true });
+console.log(process.argv[2]);
+
+if (process.argv[2] === "local") {
+  mongoose.connect("mongodb://localhost:27017/scrapeDb", {
+    useNewUrlParser: true,
+  });
+} else {
+  mongoose.connect(
+    "mongodb://8connor:conrad1@ds125556.mlab.com:25556/heroku_95gsj4c7",
+    { useNewUrlParser: true }
+  );
+}
 
 // =================================================================================
 // ROUTES
 // =================================================================================
-
 
 var articles = [];
 
@@ -70,7 +80,7 @@ app.get("/scrape", function (req, res) {
           console.log(err);
         });
     });
-    res.json("hello")
+    res.json("hello");
   });
 });
 
@@ -93,6 +103,29 @@ app.get("/delete", function (req, res) {
       res.json(data);
     })
     .catch((error) => console.log(error));
+});
+
+app.post("/api/saved", function (req, res) {
+  console.log(req.body);
+
+  db.Article.updateMany(
+    {
+      _id: req.body.artNum,
+    },
+    { isSaved: true }
+  )
+    .lean()
+    .then((data) => res.json(data));
+});
+
+app.get("/saved", function (res, res) {
+  db.Article.find({ isSaved: true })
+    .lean()
+    .then(function (data) {
+      res.render("saved", {
+        data: data
+      });
+    });
 });
 
 // Start the server

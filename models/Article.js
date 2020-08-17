@@ -17,8 +17,9 @@ var ArticleSchema = new Schema({
   // This allows us to populate the Article with an associated Note
   note: {
     type: Schema.Types.ObjectId,
-    ref: "Note"
-  }
+    ref: "Note",
+  },
+  isSaved: Boolean,
 });
 
 // This creates our model from the above schema, using mongoose's model method
