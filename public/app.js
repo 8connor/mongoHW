@@ -22,12 +22,20 @@ $(document).on("click", "#delete", () => {
   });
 });
 
+console.log(window.location.pathname);
+
 $(document).on("click", ".savebtn", function () {
   var artNum = {
     artNum: $(this).attr("id"),
+    isSaved: true,
   };
 
+  if (window.location.pathname === "/saved") {
+    artNum.isSaved = false;
+  };
 
-  $.post("/api/saved", artNum, (data) => console.log(data));
-
+  $.post("/api/saved", artNum, (data) => {
+    $(".savedLi").empty()
+    console.log(data);
+  });
 });

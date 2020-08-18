@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="/">Scrapedisc</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
@@ -12,30 +13,32 @@
         <a class="nav-link" href="/saved">Saved Articles</a>
       </li>
       <li>
-          <button id="scrape">Scrape</a>
+        <button id="scrape">Scrape</a>
       </li>
       <li>
-          <button id="delete">delete</a>
+        <button id="delete">delete</a>
       </li>
     </ul>
   </div>
 </nav>
 
-    
-
-    <div id="wrapper">
-      <ul id="articles">
-        
-        {{#each articleList}}
-         
-          <li>{{this.title}}</li>
-          <button class="button savebtn" type="button" id="{{this._id}}">Save</button>
-        {{/each}}
 
 
-      </ul>
-      <div id="notes"></div>
-    </div>
+<div id="wrapper">
+  <ul id="articles">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="/app.js"></script>
+    {{#each articleList}}
+
+    <li class="newList">{{this.title}}{{#if this.isSaved}}
+    <p class="justSaved" style="color: red;">This is saved</p>
+    {{/if}}</li>
+    <button class="button savebtn" type="button" id="{{this._id}}">Save</button>
+    {{/each}}
+
+
+  </ul>
+  <div id="notes"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/app.js"></script>

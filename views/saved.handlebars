@@ -26,10 +26,11 @@
 
 
   <h2>Saved: </h2>
-  <ul id="articles">
+  <ul class="savedLi" id="articles">
     {{#each data}}
 
     <li>{{this.title}}</li>
+    <button class="button savebtn" type="button" id="{{this._id}}">Remove</button>
 
     {{/each}}
   </ul>

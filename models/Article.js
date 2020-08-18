@@ -8,8 +8,14 @@ var Schema = mongoose.Schema;
 var ArticleSchema = new Schema({
   // `href` is required and of type String
   href: String,
-  title: String,
+
+  title: {
+    type: String,
+    unique: true,
+  },
+
   img: String,
+  
   summary: String,
   // `summary` is
   // `note` is an object that stores a Note id
@@ -19,6 +25,7 @@ var ArticleSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Note",
   },
+
   isSaved: Boolean,
 });
 

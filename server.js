@@ -106,16 +106,33 @@ app.get("/delete", function (req, res) {
 });
 
 app.post("/api/saved", function (req, res) {
-  console.log(req.body);
+  if (req.body.isSaved === "true") {
+    db.Article.updateMany(
+      {
+        _id: req.body.artNum,
+      },
+      { isSaved: true }
+    )
+      .lean()
+      .then((data) => res.json(data))
+      .catch((err) => console.log(err));
+  } else {
+    db.Article.updateMany(
+      {
+        _id: req.body.artNum,
+      },
+      {
+        $unset: { isSaved: "" },
+      }
+    )
+      .lean()
+      .then((data) => {
+        console.log(data);
 
-  db.Article.updateMany(
-    {
-      _id: req.body.artNum,
-    },
-    { isSaved: true }
-  )
-    .lean()
-    .then((data) => res.json(data));
+        res.json(data);
+      })
+      .catch((err) => console.log(err));
+  }
 });
 
 app.get("/saved", function (res, res) {
@@ -123,9 +140,10 @@ app.get("/saved", function (res, res) {
     .lean()
     .then(function (data) {
       res.render("saved", {
-        data: data
+        data: data,
       });
-    });
+    })
+    .catch((err) => console.log(err));
 });
 
 // Start the server
