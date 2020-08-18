@@ -32,7 +32,7 @@ if (process.argv[2] === "local") {
   });
 } else {
   mongoose.connect(
-    "mongodb://8connor:conrad1@ds125556.mlab.com:25556/heroku_95gsj4c7",
+    process.env.MONGODB_URI,
     { useNewUrlParser: true }
   );
 }
@@ -80,8 +80,7 @@ app.get("/scrape", function (req, res) {
           console.log(err);
         });
     });
-    res.json("hello");
-  });
+  }).then(() => res.json("hello"));
 });
 
 app.get("/", function (req, res) {
