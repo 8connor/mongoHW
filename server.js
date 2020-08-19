@@ -80,7 +80,7 @@ app.get("/scrape", function (req, res) {
           console.log(err);
         });
     });
-  }).then(() => res.json("hello"));
+  }).then(() => res.send("hello"));
 });
 
 app.get("/", function (req, res) {
