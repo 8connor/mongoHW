@@ -100,7 +100,7 @@ app.get("/delete", function (req, res) {
       res.json(data);
     })
     .catch((error) => console.log(error));
-    mongoose.connection.db
+  mongoose.connection.db
     .dropCollection("notes")
     .then(function (data) {
       res.json(data);
@@ -155,7 +155,7 @@ app.post("/api/note", function (req, res) {
       console.log(req.body.artNum);
       db.Article.findOneAndUpdate(
         { _id: req.body.artNum },
-        { note: dbNote._id }
+        { note: dbNote._id }, { new: true }
       )
         .populate("note")
         .lean()
