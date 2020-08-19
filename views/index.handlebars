@@ -3,13 +3,12 @@
 
     {{#each articleList}}
 
-    <li class="newList">{{this.title}}{{#if this.isSaved}}
-    <p class="justSaved" style="color: red;">This is saved</p>
-    {{/if}}</li>
-    <button class="button savebtn" type="button" id="{{this._id}}">Save</button>
+    <li class="newList"><a href="{{this.href}}">{{this.title}}</a></li>
+
+    <button class="button btn btn-info savebtn" type="button" id="{{this._id}}">Save</button>
+
     {{/each}}
-
-
+    
   </ul>
   <div id="notes"></div>
 </div>

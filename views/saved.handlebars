@@ -1,13 +1,14 @@
 <div id="wrapper">
-
-  <h2>Saved: </h2>
   <ul class="savedLi" id="articles">
+
     {{#each data}}
 
-    <li>{{this.title}}</li>
-    <button class="button savebtn" type="button" id="{{this._id}}">Remove</button>
+    <li class="newList"><a href="{{this.href}}">{{this.title}}</a></li>
+
+    <button class="button savebtn btn btn-danger" type="button" id="{{this._id}}">Remove</button>
 
     {{/each}}
+
   </ul>
   <div id="notes"></div>
 </div>

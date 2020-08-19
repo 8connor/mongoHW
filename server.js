@@ -31,10 +31,7 @@ if (process.argv[2] === "local") {
     useNewUrlParser: true,
   });
 } else {
-  mongoose.connect(
-    process.env.MONGODB_URI,
-    { useNewUrlParser: true }
-  );
+  mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 }
 
 // =================================================================================
@@ -46,45 +43,48 @@ var articles = [];
 // A GET route for scraping the Slippedisc website
 app.get("/scrape", function (req, res) {
   // First, we grab the body of the html with axios
-  axios.get("http://www.slippedisc.com/").then(function (response) {
-    // Then, we load that into cheerio and save it to $ for a shorthand selector
-    var $ = cheerio.load(response.data);
+  axios
+    .get("http://www.slippedisc.com/")
+    .then(function (response) {
+      // Then, we load that into cheerio and save it to $ for a shorthand selector
+      var $ = cheerio.load(response.data);
 
-    ($body = $(response.data)), ($articles = $body.find("article"));
+      ($body = $(response.data)), ($articles = $body.find("article"));
 
-    $articles.each(function (i, element) {
-      // Save an empty result object
-      var result = {};
-      // Add the data
-      var $a = $(element).children("a"),
-        $title = $(element).find("h3").text(),
-        $img = $(element).find("img"),
-        $summary = $(element).find("p").text();
+      $articles.each(function (i, element) {
+        // Save an empty result object
+        var result = {};
+        // Add the data
+        var $a = $(element).children("a"),
+          $title = $(element).find("h3").text(),
+          $img = $(element).find("img"),
+          $summary = $(element).find("p").text();
 
-      result.items = {
-        href: $a.attr("href"),
-        title: $title.trim(),
-        img: $img.attr("src"),
-        summary: $summary.trim(),
-      };
-      // Create a new Article using the `result` object built from scraping
-      db.Article.create(result.items)
-        .then(function (dbArticle) {
-          // View the added result in the console
-          console.log("Added to DB:");
-          console.log(dbArticle);
-          articles.push(dbArticle);
-        })
-        .catch(function (err) {
-          // If an error occurred, log it
-          console.log(err);
-        });
-    });
-  }).then(() => res.json("hello"));
+        result.items = {
+          href: $a.attr("href"),
+          title: $title.trim(),
+          img: $img.attr("src"),
+          summary: $summary.trim(),
+        };
+        // Create a new Article using the `result` object built from scraping
+        db.Article.create(result.items)
+          .then(function (dbArticle) {
+            // View the added result in the console
+            console.log("Added to DB:");
+            console.log(dbArticle);
+            articles.push(dbArticle);
+          })
+          .catch(function (err) {
+            // If an error occurred, log it
+            console.log(err);
+          });
+      });
+    })
+    .then(() => res.json("hello"));
 });
 
 app.get("/", function (req, res) {
-  db.Article.find({})
+  db.Article.find({ isSaved: { $exists: false } })
     .lean()
     .then(function (data) {
       res.render("index", {

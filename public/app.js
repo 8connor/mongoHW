@@ -33,9 +33,10 @@ $(document).on("click", ".savebtn", function () {
   if (window.location.pathname === "/saved") {
     artNum.isSaved = false;
   };
-
+  
   $.post("/api/saved", artNum, (data) => {
-    $(".savedLi").empty()
+    $(this).prev().hide()
+    $(this).hide()
     console.log(data);
   });
 });

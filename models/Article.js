@@ -11,11 +11,11 @@ var ArticleSchema = new Schema({
 
   title: {
     type: String,
-    unique: true,
+    unique: true
   },
 
   img: String,
-  
+
   summary: String,
   // `summary` is
   // `note` is an object that stores a Note id
