@@ -42,15 +42,16 @@ $(document).on("click", ".savebtn", function () {
 });
 
 $(document).on("click", ".noteBtn", function () {
-  console.log();
-
   var note = {
-    noteNum: $(this).prev().attr("id"),
-    title: $(".noteTitle").val(),
-    body: $(".noteBody").val(),
+    artNum: $(this).prev().attr("id"),
   };
 
   $(".noteSubmit").on("click", function () {
+    console.log(note);
+
+    note.title = $("#noteTitle").val();
+    note.body = $("#noteBody").val();
+
     $.post("/api/note", note, (data) => {
       console.log(data);
     });

@@ -134,7 +134,7 @@ app.post("/api/saved", function (req, res) {
   }
 });
 
-app.get("/saved", function (res, res) {
+app.get("/saved", function (req, res) {
   db.Article.find({ isSaved: true })
     .lean()
     .then(function (data) {
@@ -143,6 +143,25 @@ app.get("/saved", function (res, res) {
       });
     })
     .catch((err) => console.log(err));
+});
+
+app.post("/api/note", function (req, res) {
+  db.Note.create({ title: req.body.title, body: req.body.body })
+    .then(function (dbNote) {
+      console.log(req.body.artNum);
+      db.Article.findOneAndUpdate(
+        { _id: req.body.artNum },
+        { note: dbNote._id }
+      )
+        .populate("note")
+        .lean()
+        .then(function (dbArticle) {
+          res.json(dbArticle);
+        });
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
 });
 
 // Start the server
