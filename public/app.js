@@ -32,7 +32,16 @@ $(document).on("click", ".savebtn", function () {
 
   $.post("/api/saved", artNum, (data) => {
     $(this).prev().hide();
+    $(this).next().hide();
     $(this).hide();
+
+    console.log(data)
+
+    if (typeof $(this).next().next().attr("id") === "undefined") {
+      return;
+    } else if ($(this).next().next().attr("id").includes("note")) {
+      $(this).next().next().hide();
+    }
   });
 });
 
@@ -42,7 +51,6 @@ $(document).on("click", ".noteBtn", function () {
   };
 
   $(".noteSubmit").on("click", function () {
-
     note.title = $("#noteTitle").val();
     note.body = $("#noteBody").val();
 

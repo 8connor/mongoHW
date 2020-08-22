@@ -12,7 +12,7 @@
       add a note
     </button>
     {{#if this.note}}
-    <div class="card" style="width: 18rem; margin: 10px 0 10px 0">
+    <div class="card" style="width: 18rem; margin: 10px 0 10px 0" id="note{{@index}}">
       <div class="card-body">
         <h5 class="card-title">{{this.note.title}}</h5>
 
@@ -25,7 +25,6 @@
     {{/each}}
 
   </ul>
-  <div id="notes"></div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="

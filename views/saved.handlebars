@@ -12,6 +12,17 @@
       add a note
     </button>
 
+    {{#if this.note}}
+    <div class="card" style="width: 18rem; margin: 10px 0 10px 0" id="note{{@index}}">
+      <div class="card-body">
+        <h5 class="card-title">{{this.note.title}}</h5>
+
+        <p class="card-text">{{this.note.body}}</p>
+
+      </div>
+    </div>
+    {{/if}}
+
     {{/each}}
 
   </ul>

@@ -83,7 +83,8 @@ app.get("/scrape", function (req, res) {
 });
 
 app.get("/", function (req, res) {
-  db.Article.find({ isSaved: { $exists: false } }).populate("note")
+  db.Article.find({ isSaved: { $exists: false } })
+    .populate("note")
     .lean()
     .then(function (data) {
       res.render("index", {
@@ -140,6 +141,7 @@ app.post("/api/saved", function (req, res) {
 
 app.get("/saved", function (req, res) {
   db.Article.find({ isSaved: true })
+    .populate("note")
     .lean()
     .then(function (data) {
       res.render("saved", {
@@ -155,7 +157,8 @@ app.post("/api/note", function (req, res) {
       console.log(req.body.artNum);
       db.Article.findOneAndUpdate(
         { _id: req.body.artNum },
-        { note: dbNote._id }, { new: true }
+        { note: dbNote._id },
+        { new: true }
       )
         .populate("note")
         .lean()
